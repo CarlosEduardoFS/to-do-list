@@ -3,32 +3,36 @@ package com.task.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-@Entity(name="db_user")
-public class User implements Serializable{
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity(name="db_login")
+public class Login implements Serializable{
 	
 	private static final long serialVersionUID = 1l;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
+	private String email;
+	private String password;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Login login;
+	@JsonIgnore
+	@OneToOne(mappedBy="login")
+	private User user;
 	
-	public User() {}
+	public Login() {}
 
-	public User(Long id, String name, Login login) {
+	public Login(Long id, String email, String password,User user) {
 		this.id = id;
-		this.name = name;
-		this.login = login;
+		this.email = email;
+		this.password = password;
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -39,20 +43,28 @@ public class User implements Serializable{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public Login getLogin() {
-		return login;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setLogin(Login login) {
-		this.login = login;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
@@ -68,7 +80,7 @@ public class User implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Login other = (Login) obj;
 		return Objects.equals(id, other.id);
 	}
 }
