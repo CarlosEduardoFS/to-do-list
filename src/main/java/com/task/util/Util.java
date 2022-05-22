@@ -12,7 +12,7 @@ public class Util {
 		List<Task> activeTasksList = new ArrayList<>();
 		
 		for (Task t : list) {
-			if (t.getStatus() == TaskStatus.toDo.getCode()) {
+			if (t.getStatus() != TaskStatus.done.getCode()) {
 				activeTasksList.add(t);
 			}
 		}

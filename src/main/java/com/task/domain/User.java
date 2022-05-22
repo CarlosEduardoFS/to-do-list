@@ -26,7 +26,7 @@ public class User implements Serializable{
 	@OneToOne(cascade = CascadeType.ALL)
 	private Login login;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	private List<Task> tasks = new ArrayList<>();
 	
 	public User() {}
