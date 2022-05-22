@@ -65,7 +65,11 @@ public class User implements Serializable{
 	public List<Task> getTasks() {
 		return tasks;
 	}
-
+	
+	public void setTask(List<Task> list) {
+		this.tasks = list;
+	}
+	
 	public void addTask(Task task) {
 		this.tasks.add(task);
 	}
