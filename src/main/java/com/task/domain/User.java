@@ -1,6 +1,8 @@
 package com.task.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -8,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name="db_user")
@@ -23,12 +26,16 @@ public class User implements Serializable{
 	@OneToOne(cascade = CascadeType.ALL)
 	private Login login;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<Task> tasks = new ArrayList<>();
+	
 	public User() {}
 
-	public User(Long id, String name, Login login) {
+	public User(Long id, String name, Login login, List<Task> tasks) {
 		this.id = id;
 		this.name = name;
 		this.login = login;
+		this.tasks = tasks;
 	}
 
 	public Long getId() {
@@ -53,6 +60,14 @@ public class User implements Serializable{
 
 	public void setLogin(Login login) {
 		this.login = login;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void addTask(Task task) {
+		this.tasks.add(task);
 	}
 
 	@Override
